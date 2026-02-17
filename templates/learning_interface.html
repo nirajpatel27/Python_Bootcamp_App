@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ chapter.title }} | Python Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="main-container">
+    <nav class="sidebar">
+        <div class="brand">Niraj's PythonLab</div>
+        <div class="course-map">
+            {% for item in course_map %}
+            <a href="/learn/{{ item.slug }}" class="module-link {{ 'active' if item.slug == chapter.slug else '' }}">
+                <span class="module-id">{{ loop.index }}</span>
+                <span class="module-title">{{ item.title }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <main class="workspace">
+        
+        <div class="theory-pane">
+            <header>
+                
+                <div class="chapter-header">
+                    <h1>{{ chapter.title }}</h1>
+                    <div class="progress-container">
+                        <div class="progress-fill" style="width: {{ progress }}%"></div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-body">
+                {{ chapter.content | safe }}
+            </div>
+
+            {% if chapter.quiz %}
+            <div class="quiz-container">
+                <h3>⚡ Knowledge Check</h3>
+                {% for q in chapter.quiz %}
+                <div class="quiz-card" id="quiz-{{ loop.index }}">
+                    <p class="question">{{ q.question }}</p>
+                    <div class="options">
+                        {% for option in q.options %}
+                        <button onclick="checkAnswer(this, {{ loop.index0 }}, {{ q.answer }})">{{ option }}</button>
+                        {% endfor %}
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="nav-footer">
+                {% if prev_slug %}
+                <a href="/learn/{{ prev_slug }}" class="btn secondary">← Previous</a>
+                {% else %}
+                <div></div>
+                {% endif %}
+
+                {% if next_slug %}
+                <a href="/learn/{{ next_slug }}" class="btn primary">Next Chapter →</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="practice-pane">
+            <div class="editor-header">
+                <span>main.py</span>
+                <button id="run-btn" onclick="runPython()">
+                    <span id="play-icon">▶</span> Run Code
+                </button>
+            </div>
+            <div id="editor">{{ chapter.code_default }}</div>
+            <div class="console">
+                <div class="console-header">Output Terminal</div>
+                <pre id="output">Initializing Python environment...</pre>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

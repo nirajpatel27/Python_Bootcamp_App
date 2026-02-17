@@ -1,57 +1,60 @@
-// Function to mark a chapter as complete
-function markComplete(slug) {
-    let progress = JSON.parse(localStorage.getItem('pyBootcampProgress')) || [];
-    if (!progress.includes(slug)) {
-        progress.push(slug);
-        localStorage.setItem('pyBootcampProgress', JSON.stringify(progress));
-    }
-    alert("Chapter completed! Progress saved.");
-    updateUI();
-}
+// 1. Initialize Ace Editor
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/twilight");
+editor.session.setMode("ace/mode/python");
 
-// Update UI based on saved progress
-function updateUI() {
-    let progress = JSON.parse(localStorage.getItem('pyBootcampProgress')) || [];
+// 2. Initialize Pyodide (Python Runner)
+let pyodideReady = false;
+let pyodide;
+
+async function main() {
+    document.getElementById("output").innerText = "Initializing Python Kernel...\n(This downloads ~10MB once)";
+    pyodide = await loadPyodide();
+    pyodideReady = true;
+    document.getElementById("output").innerText = "Python 3.10 Ready! Click 'Run Code'.";
+}
+main();
+
+// 3. Run Code Function
+async function runPython() {
+    if (!pyodideReady) return;
     
-    // Update Sidebar Checks
-    document.querySelectorAll('.check-mark').forEach(el => {
-        if (progress.includes(el.dataset.slug)) {
-            el.style.opacity = '1';
-        }
-    });
-
-    // Update Dashboard Progress Bar (if on dashboard)
-    const totalBar = document.getElementById('totalProgress');
-    if (totalBar) {
-        const total = document.querySelectorAll('.chapter-card').length;
-        const percentage = (progress.length / total) * 100;
-        totalBar.style.width = percentage + '%';
+    let code = editor.getValue();
+    let outputDiv = document.getElementById("output");
+    outputDiv.innerText = "Running...";
+    
+    try {
+        // Redirect stdout to our console
+        pyodide.setStdout({ batched: (msg) => { outputDiv.innerText += msg + "\n"; } });
         
-        // Update cards
-        document.querySelectorAll('.chapter-card').forEach(card => {
-            if (progress.includes(card.dataset.slug)) {
-                card.classList.add('completed');
-                card.querySelector('.status-icon').innerText = '●';
-            }
-        });
+        // Clear previous output
+        outputDiv.innerText = "";
+        
+        // Execute
+        await pyodide.runPythonAsync(code);
+        
+    } catch (err) {
+        outputDiv.innerText = err;
     }
 }
 
-// Global Search Functionality
-const searchInput = document.getElementById('globalSearch');
-if (searchInput) {
-    searchInput.addEventListener('keyup', (e) => {
-        const term = e.target.value.toLowerCase();
-        document.querySelectorAll('.chapter-card').forEach(card => {
-            const title = card.querySelector('h3').innerText.toLowerCase();
-            if (title.includes(term)) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
+// 4. Quiz Logic
+function checkAnswer(btn, selectedIndex, correctIndex) {
+    let parent = btn.parentElement;
+    let buttons = parent.querySelectorAll('button');
+    let feedback = parent.parentElement.querySelector('.feedback');
+    
+    // Disable all buttons
+    buttons.forEach(b => b.disabled = true);
+    
+    if (selectedIndex === correctIndex) {
+        btn.classList.add('correct');
+        feedback.innerText = "Correct! 🎉";
+        feedback.style.color = "#4ec9b0";
+    } else {
+        btn.classList.add('wrong');
+        buttons[correctIndex].classList.add('correct'); // Show correct answer
+        feedback.innerText = "Incorrect. Try the code example above!";
+        feedback.style.color = "#e74c3c";
+    }
 }
-
-// Run on load
-document.addEventListener('DOMContentLoaded', updateUI);
