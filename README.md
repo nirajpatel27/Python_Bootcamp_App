@@ -101,12 +101,13 @@ All chapters stored in `content.json`:
 ## 🛠 Future Improvements
 
 - User authentication
-- Certificate generation
 - Database integration
-- Deployment (Render, Railway, AWS)
+- Deployment (Render, AWS)
 
 ---
 
 ## 👨‍💻 Author
 
 Niraj Patel — Built with Flask & Passion 🚀
+
+
