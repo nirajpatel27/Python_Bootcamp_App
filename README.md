@@ -1,4 +1,4 @@
-# 🐍 Niraj's PythonLab
+# 🐍 Niraj's PythonLab for Web
 
 An interactive Python learning platform built with **Flask**, featuring:
 
@@ -16,7 +16,7 @@ An interactive Python learning platform built with **Flask**, featuring:
 
 1. **Clone Repository**
 ```bash
-git clone https://github.com/yourusername/pythonlab.git
+git clone https://github.com/nirajpatel27/pythonlab.git
 cd pythonlab
 ```
 
