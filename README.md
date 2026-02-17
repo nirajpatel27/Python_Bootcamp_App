@@ -1,4 +1,4 @@
-# 🐍 Niraj's PythonLab for Web
+# 🐍 Niraj's PythonLab for Web Only
 
 An interactive Python learning platform built with **Flask**, featuring:
 
