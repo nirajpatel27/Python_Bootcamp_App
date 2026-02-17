@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ chapter.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="brand"><a href="/">← Back to Dashboard</a></div>
+        <div class="toc">
+            {% for item in menu %}
+            <a href="/read/{{ item.slug }}" class="{{ 'active' if item.slug == chapter.slug else '' }}">
+                {{ item.title }}
+                <span class="check-mark" data-slug="{{ item.slug }}">✓</span>
+            </a>
+            {% endfor %}
+        </div>
+    </aside>
+
+    <main class="content-reader">
+        <div class="reader-header">
+            <h1>{{ chapter.title }}</h1>
+            <button onclick="markComplete('{{ chapter.slug }}')" class="btn-complete">Mark as Complete</button>
+        </div>
+        
+        <div class="prose">
+            {{ chapter.content | safe }}
+        </div>
+        
+        {% if chapter.summary %}
+        <div class="revision-box">
+            <h3>⚡ Quick Revision</h3>
+            <p>{{ chapter.summary | safe }}</p>
+        </div>
+        {% endif %}
+    </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script src="/static/script.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

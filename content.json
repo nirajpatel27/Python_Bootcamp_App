@@ -1,0 +1,74 @@
+[
+    {
+        "title": "1. Introduction to Python",
+        "slug": "intro",
+        "summary": "<ul><li>Python is a high-level, interpreted language known for simplicity.</li><li>It is used in Web Dev, Data Science, Automation, and AI.</li><li>Setup requires installing Python and adding it to PATH.</li></ul>",
+        "content": "<h2>What is Programming?</h2><p>Programming is the process of giving instructions to a computer to perform specific tasks. It involves writing code in a programming language that the computer can understand and execute.</p><h2>Why Python?</h2><p>Python is a high-level, interpreted programming language known for its simplicity and readability. It is widely used in:</p><ul><li>Web Development (Django, Flask)</li><li>Data Science and Machine Learning (Pandas, NumPy, TensorFlow)</li><li>Automation and Scripting</li><li>Game Development (Pygame)</li></ul><h2>Setting Up</h2><p>To get started, download the latest version from python.org and ensure you check the box to 'Add Python to PATH'.</p><h3>The 'Hello, World!' Program</h3><p>Open your IDE (VS Code is recommended) and type the following:</p><div class='code-block'><pre><code>print(\"Hello, World!\")</code></pre></div><p>Output:</p><div class='code-block'><pre><code>Hello, World!</code></pre></div>"
+    },
+    {
+        "title": "2. Fundamentals & Variables",
+        "slug": "basics",
+        "summary": "<ul><li>Variables store data and do not need explicit declaration.</li><li>Common types: int, float, str, bool.</li><li>Typecasting converts one data type to another.</li></ul>",
+        "content": "<h2>Variables</h2><p>Variables are used to store data that can be used and manipulated. A variable is created when you assign a value to it.</p><div class='code-block'><pre><code>name = \"Alice\"\nage = 25\nheight = 5.6</code></pre></div><h2>Data Types</h2><p>Python supports several built-in data types:</p><ul><li><strong>Integers (int):</strong> Whole numbers (e.g., 10, -5).</li><li><strong>Floats (float):</strong> Decimal numbers (e.g., 3.14).</li><li><strong>Strings (str):</strong> Text data (e.g., \"Hello\").</li><li><strong>Booleans (bool):</strong> True or False.</li></ul><h2>Typecasting</h2><p>Typecasting is the process of converting one data type to another.</p><div class='code-block'><pre><code>num_str = \"10\"\nnum_int = int(num_str)\nprint(num_int) # Output: 10</code></pre></div>"
+    },
+    {
+        "title": "3. Control Flow",
+        "slug": "control-flow",
+        "summary": "<ul><li>Use if, elif, else for decision making.</li><li>Use for loops for sequences and while loops for conditions.</li><li>Control loops with break, continue, and pass.</li></ul>",
+        "content": "<h2>If-Else Statements</h2><p>Conditional statements allow you to execute code based on certain conditions.</p><div class='code-block'><pre><code>age = 18\nif age < 18:\n    print(\"Minor\")\nelif age == 18:\n    print(\"Just became an adult\")\nelse:\n    print(\"Adult\")</code></pre></div><h2>Loops</h2><h3>For Loops</h3><p>Used to iterate over a sequence like a list or range.</p><div class='code-block'><pre><code>for i in range(5):\n    print(i) # Prints 0 to 4</code></pre></div><h3>While Loops</h3><p>Executes as long as a condition is True.</p><div class='code-block'><pre><code>count = 0\nwhile count < 5:\n    print(count)\n    count += 1</code></pre></div>"
+    },
+    {
+        "title": "4. Strings",
+        "slug": "strings",
+        "summary": "<ul><li>Strings are immutable sequences of characters.</li><li>Slicing [start:stop:step] allows you to extract substrings.</li><li>f-strings are the modern way to format text.</li></ul>",
+        "content": "<h2>Creating Strings</h2><p>Strings are sequences of characters enclosed in quotes. Triple quotes are used for multi-line strings.</p><h2>Slicing</h2><p>You can extract parts of a string using slicing syntax <code>text[start:stop:step]</code>.</p><div class='code-block'><pre><code>text = \"Python\"\nprint(text[0:2]) # Py\nprint(text[::-1]) # nohtyP (Reverse)</code></pre></div><h2>String Methods</h2><p>Python provides built-in methods for manipulation:</p><ul><li><code>.upper()</code>: Converts to uppercase.</li><li><code>.strip()</code>: Removes whitespace.</li><li><code>.replace(old, new)</code>: Replaces substrings.</li></ul><h2>f-Strings</h2><p>Introduced in Python 3.6, f-strings are the most concise way to format strings.</p><div class='code-block'><pre><code>name = \"Alice\"\nprint(f\"Hello, {name}!\")</code></pre></div>"
+    },
+    {
+        "title": "5. Functions & Modules",
+        "slug": "functions",
+        "summary": "<ul><li>Functions promote reusability.</li><li>Lambda functions are anonymous one-liners.</li><li>Modules organize code; pip installs external libraries.</li></ul>",
+        "content": "<h2>Defining Functions</h2><p>Functions are defined using the <code>def</code> keyword.</p><div class='code-block'><pre><code>def greet(name):\n    return f\"Hello, {name}!\"\n\nprint(greet(\"Alice\"))</code></pre></div><h2>Lambda Functions</h2><p>Small, anonymous functions defined with the <code>lambda</code> keyword.</p><div class='code-block'><pre><code>square = lambda x: x**2\nprint(square(4)) # 16</code></pre></div><h2>Scope</h2><p>Variables inside functions are <strong>local</strong>. Variables outside are <strong>global</strong>. Use the <code>global</code> keyword to modify global variables inside a function.</p>"
+    },
+    {
+        "title": "6. Data Structures",
+        "slug": "data-structures",
+        "summary": "<ul><li><strong>List:</strong> Ordered, Mutable [ ].</li><li><strong>Tuple:</strong> Ordered, Immutable ( ).</li><li><strong>Set:</strong> Unordered, Unique { }.</li><li><strong>Dictionary:</strong> Key-Value Pairs { : }.</li></ul>",
+        "content": "<h2>Lists</h2><p>Ordered and mutable collections.</p><div class='code-block'><pre><code>nums = [1, 2, 3]\nnums.append(4) # [1, 2, 3, 4]</code></pre></div><h2>Tuples</h2><p>Immutable collections. Faster than lists and used as dictionary keys.</p><div class='code-block'><pre><code>coords = (10, 20)</code></pre></div><h2>Dictionaries</h2><p>Store data in key-value pairs for fast lookups.</p><div class='code-block'><pre><code>student = {\"name\": \"Alice\", \"age\": 25}\nprint(student[\"name\"])</code></pre></div>"
+    },
+    {
+        "title": "7. Object-Oriented Programming",
+        "slug": "oop",
+        "summary": "<ul><li><strong>Encapsulation:</strong> Bundling data and methods.</li><li><strong>Inheritance:</strong> Deriving new classes from existing ones.</li><li><strong>Polymorphism:</strong> Same interface, different implementation.</li></ul>",
+        "content": "<h2>Classes and Objects</h2><p>A class is a blueprint; an object is an instance of that blueprint.</p><div class='code-block'><pre><code>class Dog:\n    def __init__(self, name):\n        self.name = name\n\n    def bark(self):\n        print(f\"{self.name} says Woof!\")</code></pre></div><h2>Inheritance</h2><p>Allows a child class to reuse logic from a parent class.</p><div class='code-block'><pre><code>class Animal:\n    def speak(self):\n        pass\n\nclass Cat(Animal):\n    def speak(self):\n        print(\"Meow\")</code></pre></div>"
+    },
+    {
+        "title": "8. Advanced Concepts",
+        "slug": "advanced",
+        "summary": "<ul><li>Decorators modify function behavior.</li><li>@property allows getter/setter logic with attribute syntax.</li><li>Static methods don't require class or instance access.</li></ul>",
+        "content": "<h2>Decorators</h2><p>Wrappers that modify the behavior of functions.</p><div class='code-block'><pre><code>def my_decorator(func):\n    def wrapper():\n        print(\"Before\")\n        func()\n        print(\"After\")\n    return wrapper</code></pre></div><h2>Getters & Setters</h2><p>Use the <code>@property</code> decorator to control attribute access pythonically.</p><div class='code-block'><pre><code>class Person:\n    @property\n    def name(self):\n        return self._name</code></pre></div>"
+    },
+    {
+        "title": "9. Magic Methods",
+        "slug": "magic-methods",
+        "summary": "<ul><li>Dunder methods start/end with double underscores.</li><li>__init__ initializes objects.</li><li>__str__ defines string representation.</li></ul>",
+        "content": "<h2>Introduction</h2><p>Magic methods allow you to define how objects behave with operators like +, -, ==.</p><h2>Common Methods</h2><ul><li><code>__init__</code>: Constructor.</li><li><code>__str__</code>: Human-readable string representation.</li><li><code>__add__</code>: Defines behavior for the + operator.</li></ul><div class='code-block'><pre><code>def __str__(self):\n    return f\"Person({self.name})\"</code></pre></div>"
+    },
+    {
+        "title": "10. Error Handling",
+        "slug": "errors",
+        "summary": "<ul><li>Try/Except blocks prevent crashes.</li><li>Finally runs cleanup code regardless of errors.</li><li>Raise allows triggering custom exceptions.</li></ul>",
+        "content": "<h2>Try-Except</h2><p>Handle errors gracefully instead of crashing.</p><div class='code-block'><pre><code>try:\n    x = 10 / 0\nexcept ZeroDivisionError:\n    print(\"Cannot divide by zero!\")\nfinally:\n    print(\"Execution complete.\")</code></pre></div><h2>Custom Exceptions</h2><p>You can define your own error types by inheriting from Exception.</p>"
+    },
+    {
+        "title": "11. File I/O & OS",
+        "slug": "files",
+        "summary": "<ul><li>'r' for read, 'w' for write, 'a' for append.</li><li>Use 'with' statements to automatically close files.</li><li>The os module handles directory operations.</li></ul>",
+        "content": "<h2>Reading and Writing</h2><p>The <code>with</code> statement is recommended as it handles closing files automatically.</p><div class='code-block'><pre><code>with open(\"data.txt\", \"w\") as f:\n    f.write(\"Hello World\")\n\nwith open(\"data.txt\", \"r\") as f:\n    print(f.read())</code></pre></div><h2>OS Module</h2><p>Use <code>os</code> to interact with the operating system.</p><div class='code-block'><pre><code>import os\nprint(os.getcwd()) # Get current directory</code></pre></div>"
+    },
+    {
+        "title": "12. External Libraries",
+        "slug": "libraries",
+        "summary": "<ul><li>Virtual Environments isolate dependencies.</li><li>pip is the package installer.</li><li>Requests handles API calls; Regex handles pattern matching.</li></ul>",
+        "content": "<h2>Virtual Environments</h2><p>Isolate project dependencies using venv.</p><div class='code-block'><pre><code>python -m venv my_env</code></pre></div><h2>Requests Module</h2><p>Simplifies HTTP requests to APIs.</p><div class='code-block'><pre><code>import requests\nresponse = requests.get(\"https://api.github.com\")</code></pre></div><h2>Regex</h2><p>Pattern matching using the <code>re</code> module.</p><div class='code-block'><pre><code>import re\nmatch = re.search(\"pattern\", text)</code></pre></div>"
+    }
+]
