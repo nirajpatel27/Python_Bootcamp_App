@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome | Niraj's PythonLab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== Floating Background Blobs ===== */
+
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #3b82f6, transparent 70%);
+            filter: blur(120px);
+            opacity: 0.3;
+            z-index: 0;
+            animation: float 12s ease-in-out infinite alternate;
+        }
+
+        body::after {
+            right: -150px;
+            bottom: -100px;
+            background: radial-gradient(circle, #8b5cf6, transparent 70%);
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(-20px);
+            }
+
+            to {
+                transform: translateY(20px);
+            }
+        }
+
+        .hero-wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero-card {
+            backdrop-filter: blur(20px);
+            background: rgba(22, 25, 34, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 60px 50px;
+            border-radius: 24px;
+            max-width: 750px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        /* ===== Brand Gradient Text ===== */
+
+
+        @keyframes gradientShift {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+
+        .brand {
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            transition: all 0.3s ease;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #3b82f6, #f02106, #6366f1);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s linear infinite;
+        }
+
+        /* Glow background */
+        .brand::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 20px;
+            background: linear-gradient(135deg,
+                    #f85041,
+                    #8b5cf6,
+                    #d3e90c,
+                    #f63bd4);
+            background-size: 300% 300%;
+            z-index: -5;
+            filter: blur(14px);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Hover glow activation */
+        .brand:hover::before {
+            opacity: 0.1;
+            animation: gradientMove 2s linear infinite;
+        }
+
+        .brand:hover {
+            transform: translateY(-4px);
+            color: #ffffff;
+        }
+
+        /* Animated gradient movement */
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* ===== Typing Animation ===== */
+
+        .hero-card h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid #6366f1;
+            width: 0;
+            animation: typing 3s steps(40, end) forwards, blink 0.7s infinite;
+        }
+
+        @keyframes typing {
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .hero-card p {
+            font-size: 1.15rem;
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+            animation-delay: 2.8s;
+        }
+
+        /* ===== Button Upgrade ===== */
+
+        .start-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #ffffff;
+            padding: 16px 45px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+            animation-delay: 3.2s;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(139, 92, 246, 0.6);
+        }
+
+        /* ===== Feature Cards Animation ===== */
+
+        .features {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+            animation-delay: 3.6s;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 25px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .feature-card h3 {
+            color: #6366f1;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* ===== Footer ===== */
+
+        footer {
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #64748b;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 4s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-card {
+                padding: 40px 25px;
+            }
+
+            .hero-card h1 {
+                font-size: 1.8rem;
+                white-space: normal;
+                border-right: none;
+                animation: none;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero-wrapper">
+
+        <div class="hero-card">
+            <div class="brand">Niraj's PythonLab</div>
+
+            <h1><span class="typing">Master Python</span><br>Programming the Right Way</h1>
+
+
+            <p>
+                A structured, interactive learning environment designed to help you
+                understand Python fundamentals, data structures, and OOP concepts
+                through guided lessons and real-world practice.
+            </p>
+
+            <a href="{{ url_for('learn', slug=first_slug) }}" class="start-btn">
+                Start Learning →
+            </a>
+
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Interactive Lessons</h3>
+                    <p>Structured chapters with step-by-step explanations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Real Examples</h3>
+                    <p>Practical coding examples for deeper understanding.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <footer>
+            © 2026 Niraj Patel · Built with Flask
+        </footer>
+
+    </div>
+</body>
+
+</html>

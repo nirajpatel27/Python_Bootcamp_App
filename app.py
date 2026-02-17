@@ -13,13 +13,16 @@ def load_course():
         print(f"Error loading content: {e}")
         return []
 
+
+@app.route('/')
 @app.route('/')
 def home():
     data = load_course()
     if not data:
         return "Error: content.json is missing or corrupted. Please check the file."
-    # Redirect to the first chapter's slug
-    return redirect(url_for('learn', slug=data[0]['slug']))
+    
+    first_slug = data[0]['slug']
+    return render_template('index.html', first_slug=first_slug)
 
 @app.route('/learn/<slug>')
 def learn(slug):

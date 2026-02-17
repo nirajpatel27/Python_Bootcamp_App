@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --bg-dark: #1e1e1e;
     --bg-panel: #252526;
     --sidebar: #2d2d30;
@@ -8,6 +8,30 @@
     --border: #3e3e42;
     --green: #4ec9b0;
     --yellow: #dcdcaa;
+} */
+:root {
+    --bg-dark: #0d0f14; /* Deeper midnight blue */
+    --bg-panel: #161922;
+    --sidebar: #12141c;
+    --accent: #0ea5e9;
+    --text-main: #94a3b8;
+    --text-header: #f8fafc;
+    --border: #262c3a;
+    --green: #10b981;
+    --yellow: #fbbf24;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent body-level scrolling */
+    background-color: #0d0f14;
 }
 
 body {
@@ -19,7 +43,12 @@ body {
     overflow: hidden;
 }
 
-.main-container { display: flex; height: 100vh; }
+.main-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
 
 /* Sidebar */
 .sidebar {
@@ -39,7 +68,66 @@ body {
     background: #252526;
     border-bottom: 1px solid var(--border);
     letter-spacing: 0.5px;
+    align-items: center;
+    text-align: center;
 }
+
+/* ===== Brand Styling ===== */
+
+.brand {
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.brand-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    transition: all 0.3s ease;
+}
+
+/* Glow background */
+.brand-link::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 12px;
+    background: linear-gradient(
+        135deg,
+        #f85041,
+        #8b5cf6,
+        #d3e90c,
+        #f63bd4
+    );
+    background-size: 300% 300%;
+    z-index: -1;
+    filter: blur(14px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Hover glow activation */
+.brand-link:hover::before {
+    opacity: 0.8;
+    animation: gradientMove 4s linear infinite;
+}
+
+.brand-link:hover {
+    transform: translateY(-4px);
+    color: #ffffff;
+}
+
+/* Animated gradient movement */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 
 .course-map { padding: 10px 0; }
 
@@ -79,12 +167,22 @@ body {
 .workspace { flex: 1; display: flex; }
 
 /* Theory Pane */
-.theory-pane {
+/* .theory-pane {
     flex: 1;
     padding: 0;
     overflow-y: auto;
     max-width: 50%;
     border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+} */
+
+.theory-pane {
+    flex: 0 0 auto; /* Do not grow, do not shrink automatically */
+    width: 45%;      /* Starting point */
+    min-width: 320px; 
+    max-width: 70vw; /* Prevent it from eating the whole screen */
+    background: var(--bg-dark);
     display: flex;
     flex-direction: column;
 }
@@ -155,10 +253,11 @@ body {
 
 /* Practice Pane */
 .practice-pane {
-    flex: 1;
+    flex: 1 1 0%;   /* Grow and shrink to fill all remaining space */
+    min-width: 350px; /* The minimum size before it looks 'ugly' */
     display: flex;
     flex-direction: column;
-    background: #1e1e1e;
+    background: #000;
 }
 
 .editor-header {
@@ -241,4 +340,131 @@ body {
 .btn.secondary:hover {
     background-color: #4e4e52;
     transform: translateX(-3px); /* Subtle slide back effect */
+}
+
+
+
+
+
+
+
+/* Mobile Menu Toggle */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.brand {
+    padding: 24px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+}
+
+.module-link {
+    padding: 14px 24px;
+    text-decoration: none;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.module-link:hover { background: #1e2230; color: white; }
+.module-link.active {
+    background: #1e2230;
+    border-left: 3px solid var(--accent);
+    color: white;
+    font-weight: 600;
+}
+
+/* Workspace */
+.workspace { flex: 1; display: flex; overflow: hidden; }
+
+/* Resizer Bar */
+.resizer {
+    width: 4px;
+    cursor: col-resize;
+    background: var(--bg-dark);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    transition: background 0.2s;
+}
+.resizer:hover { background: var(--accent); }
+
+/* Theory Pane */
+.theory-pane {
+    width: 45%; /* Default stretch */
+    min-width: 320px;
+    overflow-y: auto;
+    background: var(--bg-dark);
+}
+
+.chapter-header { padding: 40px; border-bottom: 1px solid var(--border); }
+.chapter-header h1 { margin: 0; font-size: 1.8rem; color: var(--text-header); }
+
+.content-body { padding: 40px; line-height: 1.8; font-size: 1.05rem; }
+
+/* Quiz Styles */
+.quiz-card { background: var(--bg-panel); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
+.quiz-opt { 
+    display: block; width: 100%; padding: 12px; margin: 8px 0; text-align: left;
+    background: #1e2230; border: 1px solid var(--border); color: var(--text-main);
+    border-radius: 8px; cursor: pointer; transition: 0.2s;
+}
+.quiz-opt:hover { border-color: var(--accent); }
+
+/* Practice Pane */
+.practice-pane {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+}
+
+#editor { flex: 1; font-size: 14px; }
+.console { height: 30%; background: #000; border-top: 1px solid var(--border); padding: 20px; }
+
+/* CROSS PLATFORM RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .mobile-menu-btn { display: block; }
+    .sidebar {
+        position: fixed;
+        left: 0; top: 0; bottom: 0;
+        z-index: 999;
+        transform: translateX(-100%);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .workspace { flex-direction: column; overflow-y: auto; }
+    .theory-pane, .practice-pane {
+        width: 100% !important;
+        flex: none;
+        height: auto;
+        min-height: 500px;
+    }
+    .resizer { width: 100%; height: 8px; cursor: row-resize; }
 }

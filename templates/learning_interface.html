@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{{ chapter.title }} | Python Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
-    
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<button class="mobile-menu-btn" id="menu-toggle">☰ Modules</button>
+
 <div class="main-container">
-    <nav class="sidebar">
-        <div class="brand">Niraj's PythonLab</div>
+    <nav class="sidebar" id="sidebar">
+        <div class="brand"><a href="index.html" class="brand-link">Niraj's PythonLab</a></div>
+        <!-- <div class="brand"><a href="{{ url_for('learn',  slug=course_map[0].slug) }}" class="brand-link">Niraj's PythonLab</a></div> -->
         <div class="course-map">
             {% for item in course_map %}
             <a href="/learn/{{ item.slug }}" class="module-link {{ 'active' if item.slug == chapter.slug else '' }}">
@@ -24,16 +27,12 @@
         </div>
     </nav>
 
-    <main class="workspace">
-        
-        <div class="theory-pane">
-            <header>
-                
-                <div class="chapter-header">
-                    <h1>{{ chapter.title }}</h1>
-                    <div class="progress-container">
-                        <div class="progress-fill" style="width: {{ progress }}%"></div>
-                    </div>
+    <main class="workspace" id="workspace">
+        <div class="theory-pane" id="theory-pane">
+            <header class="chapter-header">
+                <h1>{{ chapter.title }}</h1>
+                <div class="progress-container">
+                    <div class="progress-fill" style="width: {{ progress }}%"></div>
                 </div>
             </header>
             
@@ -45,11 +44,11 @@
             <div class="quiz-container">
                 <h3>⚡ Knowledge Check</h3>
                 {% for q in chapter.quiz %}
-                <div class="quiz-card" id="quiz-{{ loop.index }}">
+                <div class="quiz-card">
                     <p class="question">{{ q.question }}</p>
                     <div class="options">
                         {% for option in q.options %}
-                        <button onclick="checkAnswer(this, {{ loop.index0 }}, {{ q.answer }})">{{ option }}</button>
+                        <button class="quiz-opt" onclick="checkAnswer(this, {{ loop.index0 }}, {{ q.answer }})">{{ option }}</button>
                         {% endfor %}
                     </div>
                     <div class="feedback"></div>
@@ -60,31 +59,28 @@
 
             <div class="nav-footer">
                 {% if prev_slug %}
-                <a href="/learn/{{ prev_slug }}" class="btn secondary">← Previous</a>
-                {% else %}
-                <div></div>
-                {% endif %}
+                <a href="/learn/{{ prev_slug }}" class="btn secondary">← Prev</a>
+                {% else %}<div></div>{% endif %}
 
                 {% if next_slug %}
-                <a href="/learn/{{ next_slug }}" class="btn primary">Next Chapter →</a>
+                <a href="/learn/{{ next_slug }}" class="btn primary">Next →</a>
                 {% endif %}
             </div>
         </div>
 
-        <div class="practice-pane">
+        <div class="resizer" id="drag-bar"></div>
+
+        <div class="practice-pane" id="practice-pane">
             <div class="editor-header">
-                <span>main.py</span>
-                <button id="run-btn" onclick="runPython()">
-                    <span id="play-icon">▶</span> Run Code
-                </button>
+                <span class="file-tab">main.py</span>
+                <button id="run-btn" onclick="runPython()">▶ Run Code</button>
             </div>
             <div id="editor">{{ chapter.code_default }}</div>
             <div class="console">
                 <div class="console-header">Output Terminal</div>
-                <pre id="output">Initializing Python environment...</pre>
+                <pre id="output">Initializing Python...</pre>
             </div>
         </div>
-
     </main>
 </div>
 

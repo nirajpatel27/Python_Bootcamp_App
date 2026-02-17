@@ -58,3 +58,47 @@ function checkAnswer(btn, selectedIndex, correctIndex) {
         feedback.style.color = "#e74c3c";
     }
 }
+
+// 1. Handle Mobile Sidebar
+const menuToggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+}
+
+// 2. Handle Pane Resizing (Stretching)
+const resizer = document.getElementById('drag-bar');
+const leftSide = document.getElementById('theory-pane');
+
+if (resizer) {
+    resizer.addEventListener('mousedown', function(e) {
+        document.addEventListener('mousemove', resize);
+        document.addEventListener('mouseup', stopResize);
+        document.body.style.cursor = 'col-resize';
+    });
+}
+
+// Add editor.resize() inside your existing resize function
+// Add this logic to your resize function
+function resize(e) {
+    if (window.innerWidth > 1024) {
+        const workspaceRect = workspace.getBoundingClientRect();
+        let newWidth = e.clientX - workspaceRect.left;
+        
+        // Safety limits
+        if (newWidth > 320 && newWidth < (workspaceRect.width - 350)) {
+            theory.style.width = newWidth + 'px';
+            
+            // This is the MAGIC line that makes the editor look good
+            editor.resize(); 
+        }
+    }
+}
+
+function stopResize() {
+    document.removeEventListener('mousemove', resize);
+    document.body.style.cursor = 'default';
+}
